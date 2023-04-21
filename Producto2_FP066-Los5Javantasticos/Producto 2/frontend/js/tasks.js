@@ -268,10 +268,6 @@ function drawModalTask(index, yearweek = '', dayofweek = '') {
         }
     });
 
-    console.log('=========');
-    console.log(values);
-    console.log('=========');
-
     var newIndice = values['id'];
 
     // creamos la tarea si no existe
@@ -390,6 +386,14 @@ function drawModalTask(index, yearweek = '', dayofweek = '') {
 
   // abrimos el modal
   $('#modal-tarea').modal('show');
+  
+  // establecemos el valor del campo de prioridad y finalizado
+  $('#priority').val(task.priority);
+  if (task.finished === 1) {
+    $('#finished').prop('checked', true);
+  } else {
+    $('#finished').prop('checked', false);
+  }
 
 }
 
