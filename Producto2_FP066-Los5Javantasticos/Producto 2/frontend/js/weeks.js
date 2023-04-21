@@ -99,6 +99,7 @@ function drawModalWeek(index) {
         }
 
     // preparamos html de cada campo del formulario
+    var fields_hidden = '<input id="id" name="id" type="hidden" value="'+week.id+'">';
     var field_numweek = '<label for="numweek" class="form-label">Número semana</label><select id="numweek" name="numweek" class="form-select" aria-label="Número de semana" required><option value="">Selecciona Nº de semana</option>'+options_numweek+'</select>';
     var field_year = '<label for="year" class="form-label">Año</label><select id="year" name="year" class="form-select" aria-label="Año" required><option value="">Selecciona Año</option>'+options_year+'</select>';
     var field_description = '<label for="description" class="form-label">Descripción</label><textarea type="description" class="form-control" id="description" name="description" title="Descripción">'+week.description+'</textarea>';
@@ -107,7 +108,7 @@ function drawModalWeek(index) {
     var field_link = '<label for="link" class="form-label">Enlace</label><input type="text" class="form-control" id="link" name="link" value="'+week.link+'">';
 
     // preparamos html del formulario con los campos
-    var formHtml = '<div class="modal" tabindex="-1" id="modal-semana"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">'+title+' semana</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><form id="semana-form" class="needs-validation"><div class="modal-body"><div class="mb-3 row"><div class="col-6">'+field_numweek+'</div><div class="col-6">'+field_year+'</div></div><div class="mb-3">'+field_description+'</div><div class="mb-3">'+field_color+'</div><div class="mb-3">'+field_priority+'</div><div class="mb-3">'+field_link+'</div></div><div class="modal-footer"><button id="modal-semana-button" type="submit" class="btn btn-primary">Guardar</button></div></form></div></div></div>';
+    var formHtml = '<div class="modal" tabindex="-1" id="modal-semana"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">'+title+' semana</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><form id="semana-form" class="needs-validation"><div class="modal-body">'+fields_hidden+'<div class="mb-3 row"><div class="col-6">'+field_numweek+'</div><div class="col-6">'+field_year+'</div></div><div class="mb-3">'+field_description+'</div><div class="mb-3">'+field_color+'</div><div class="mb-3">'+field_priority+'</div><div class="mb-3">'+field_link+'</div></div><div class="modal-footer"><button id="modal-semana-button" type="submit" class="btn btn-primary">Guardar</button></div></form></div></div></div>';
     
     // borramos el formulario si existe y lo insertamos en el DOM
     $('#modal-semana').remove();
@@ -136,10 +137,10 @@ function drawModalWeek(index) {
             }
         });
         
-        var newIndice = values['year']+values['numweek'];
+        var newIndice = values['id'];
 
         // creamos la semana si no existe
-        if( typeof weeksData[newIndice] == 'undefined' ) {
+        if( newIndice == '' ) {
             fetch('http://localhost:3000/graphql', {
                 method: 'POST',
                 headers: {
